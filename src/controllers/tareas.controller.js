@@ -1,13 +1,6 @@
 
 import Tarea from "../models/tareas.js"; 
 
-//prueba
-export const prueba = (req, res) => {
-    console.log('desde el controlador de prueba')
-
-    res.send('Hola desde el controlador de prueba')
-} 
-
 // Crear una nueva tarea
 export const crearTarea = async (req, res) => {
     try {
