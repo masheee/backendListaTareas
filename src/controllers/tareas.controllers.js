@@ -31,16 +31,34 @@ export const listarTareas = async (req, res) => {
 export const borrarTarea = async (req, res) => {
     try {
         console.log(req.params.id)
-        const tareaBuscada = await Tarea.findById(req.params.id)
+        const tareaBuscada = await Tarea.findByIdAndDelete(req.params.id)
         if(!tareaBuscada){
             return res.status(404).json({ mensaje: "No se encontró la tarea" })
         }
-        await Tarea.findByIdAndDelete(req.params.id)
-        res.status(200).json({ mensaje: "El producto fue eliminado correctamente" })
+        res.status(200).json({ mensaje: "La tarea fue eliminada correctamente" })
     } catch (error) {
         console.error(error)
         res.status(500).json({ mensaje: "Ocurrio un error, no se pudo borrar la tarea" })
     }
 }
 
+//editar una tarea de la lista por ID
+export const editarTarea = async (req, res) => {
+    try {
+        const { id } = req.params
+        const updateData = req.body
+        const tareaBuscada = await Tarea.findByIdAndUpdate(
+            id, 
+            updateData, 
+            { new: true }
+        )
+        if(!tareaBuscada){
+            return res.status(404).json({ mensaje: "No se encontro la tarea" })
+        }
+        res.status(200).json(tareaBuscada)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ mensaje: "Ocurrio un error, no se pudo editar la tarea" })
+    }
+}
 
